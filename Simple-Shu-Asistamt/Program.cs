@@ -101,7 +101,7 @@ namespace Simple_Shu_Asistamt
                     overrideReset = true;
                 }
                 //Finds links by title length
-                if (titleOfText != null && titleOfText.Length > 20)
+                if (titleOfText != null && titleOfText.Substring(0, 1) == "[")
 
                 {
                     int index = titleOfText.IndexOf(':');
@@ -166,7 +166,7 @@ namespace Simple_Shu_Asistamt
                                 }
                                 if (count == 1)
                                 {
-                                    Console.WriteLine("Did this help you? \n");
+                                    Console.WriteLine("Is there anything else that I can help you? \n");
                                 }
                                 // Output: "I have no knowledge" and "I have some knowledge"
                                 Console.WriteLine(extractedText + "\n");
