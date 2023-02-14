@@ -30,9 +30,7 @@ namespace Simple_Shu_Asistamt
 
         static void Main(string[] args)
         {
-            // extract the source titles and links
-
-
+            
             string userQuery = " ";
             IamAuthenticator authenticator = new IamAuthenticator(
             apikey: "0LTlYh3-Kt6uIe1eQ8ytijsuzdnEKq_jUs8pff49fXeM"
@@ -69,30 +67,26 @@ namespace Simple_Shu_Asistamt
                      Text = userQuery
                  }
                  );
-                //JObject output = JObject.Parse(result2.Response);
-                //string txt = (string)output["output"]["generic"][0]["text"];
-                //txt = txt.Replace("\n", "\n").Replace("- ", "");
-                //var ouput = new {result2.Response};  // replace with the actual output
+                
 
 
-
-                // parse the JSON response
+                
                 JObject response = JObject.Parse(result2.Response);
-                //Console.WriteLine(result2.Response);
-                // extract the main title
-
+                try
+                {
                 titleOfText = response?["output"]?["generic"]?[0]?["text"]?.ToString();
-
-
                 mainTitle = response?["output"]?["generic"]?[0]?["title"]?.ToString();
 
-                //for (int i = 0; i < response["output"]["generic"].Count(); i++)
-                //{
+                }
+                catch(Exception c)
+                {
 
-                //     titleOfText = (string)suggestions[0]["value"]["input"]["suggestion_id"];
-                //     lables.Add((string)suggestions[0]["label"]);
-                //    titleOfText = response["output"]["generic"][i]["title"].Value<string>();
-                //}
+                }
+
+
+
+
+              
 
                 if (titleOfText != null && titleOfText.Length > 20)
                 {
@@ -102,20 +96,12 @@ namespace Simple_Shu_Asistamt
                 }
 
 
-
+                Console.WriteLine(response);
                 Console.WriteLine(mainTitle);
                 Console.WriteLine(titleOfText);
                 linkSeprater(response);
 
-                //sourceTitles.RemoveAll(s => s.Contains("Is there anything else I can help you with"));
-
-                // print the results
-
-
-                //for (int i = 0; i < sourceTitles.Count; i++)
-                //{
-                //    Console.WriteLine(sourceTitles[i] + "\n" + sourceLinks[i]);
-                //}
+               
                 try
                 {
 
