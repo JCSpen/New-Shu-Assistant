@@ -1,4 +1,11 @@
 ﻿using IBM.Cloud.SDK.Core.Authentication.Iam;
+using IBM.Watson.Assistant.v2.Model;
+using IBM.Watson.Assistant.v2;
+using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
+using System;
+using IBM.Cloud.SDK.Core.Authentication.Iam;
 using IBM.Watson.Assistant.v2;
 using IBM.Watson.Assistant.v2.Model;
 using Newtonsoft.Json.Linq;
@@ -52,7 +59,7 @@ namespace Simple_Shu_Asistamt
             var sessionId = result.Result.SessionId;
             string titleOfText = "";
             string mainTitle = "";
-            bool overrideReset= false;
+            bool overrideReset = false;
 
             while (userQuery != "0")
             {
@@ -96,20 +103,22 @@ namespace Simple_Shu_Asistamt
                 //Finds links by title length
                 if (titleOfText != null && titleOfText.Length > 20)
 
-
-
-                    titleOfText = response?["output"]?["generic"]?[0]?["text"]?.ToString();
-
-
-                mainTitle = response?["output"]?["generic"]?[0]?["title"]?.ToString();
-
-
-                if (titleOfText != null && titleOfText.Length > 20)
-
                 {
                     int index = titleOfText.IndexOf(':');
 
                     titleOfText = index >= 0 ? titleOfText.Substring(0, index) : titleOfText;
+                }
+
+                try
+                {
+                    titleOfText = response?["output"]?["generic"]?[0]?["text"]?.ToString();
+
+
+                    mainTitle = response?["output"]?["generic"]?[0]?["title"]?.ToString();
+                }
+                catch (Exception e)
+                {
+                    overrideReset = true;
                 }
 
 
