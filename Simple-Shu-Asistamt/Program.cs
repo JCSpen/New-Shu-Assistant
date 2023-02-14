@@ -64,16 +64,17 @@ namespace Simple_Shu_Asistamt
             while (userQuery != "0")
             {
 
-                //Clears Console and outputs message when exception is found
+                //Clears Console and reloads query when exception is found
                 if (overrideReset)
                 {
                     Console.Clear();
-                    Console.WriteLine("Sorry I did not catch that please try again!");
                     overrideReset = false;
                 }
-
-                Console.WriteLine("Chat with me : \n");
-                userQuery = Console.ReadLine();
+                else if (!overrideReset)
+                { 
+                    Console.WriteLine("Chat with me : \n");
+                    userQuery = Console.ReadLine(); 
+                }
 
 
                 var result2 = assistant.Message(
