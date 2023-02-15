@@ -126,7 +126,10 @@ namespace Simple_Shu_Asistamt
 
                 Console.WriteLine(mainTitle);
                 Console.WriteLine(titleOfText);
-                linkSeprater(response);
+                if (response.ToString().Contains("https"))
+                { 
+                    linkSeprater(response);
+                }
 
                 //Fetches values from JSON Response
 
@@ -194,6 +197,10 @@ namespace Simple_Shu_Asistamt
             //Formats links and outputs it with the title
             void linkSeprater(JObject response)
             {
+                bool informationals = false;
+                bool courses = false;
+                Console.WriteLine("Would you prefer short videos, full courses, or just all resources on the topic?");
+                string userResponse = Console.ReadLine();
                 for (int i = 0; i < response["output"]["generic"].Count(); i++)
                 {
                     string inputText = response?["output"]?["generic"]?[i]?["text"]?.ToString();
@@ -202,16 +209,47 @@ namespace Simple_Shu_Asistamt
                     if (inputText != null)
                     {
                         MatchCollection matches = regex.Matches(inputText);
+                        if(userResponse.ToLower().Contains("vid") || userResponse.ToLower().Contains("short"))
+                        {
+                            informationals= true;
+                        }
+                        else if(userResponse.ToLower().Contains("full") || userResponse.ToLower().Contains("cou"))
+                        {
+                            courses= true;
+                        }
                         foreach (Match match in matches)
                         {
                             string link = Regex.Match(match.Value, linkPattern).Groups[2].Value;
                             string title = match.Groups[1].Value;
-                            Console.WriteLine(title + "\n");
-                            Console.WriteLine(link + "\n");
+                            if (informationals)
+                            {
+                                if (!title.ToLower().Contains("hour"))
+                                {
+                                    outputLinks(title, link);
+                                }
+                            }
+                            else if (courses)
+                            {
+                                if (title.ToLower().Contains("hour"))
+                                {
+                                    outputLinks(title, link);
+                                }
+                            }
+                            else
+                            {
+                                outputLinks(title, link);
+                            }
+                            
 
                         }
                     }
                 }
+            }
+
+            void outputLinks(string title,string link)
+            {
+                Console.WriteLine(title + "\n");
+                Console.WriteLine(link + "\n");
             }
 
         }
